@@ -1,0 +1,105 @@
+---
+# 1. THE DEPLOYMENT
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newstrendz-deploy
+  namespace: jenkins-dev
+  labels:
+    app: newstrendz
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: newstrendz
+  template:
+    metadata:
+      labels:
+        app: newstrendz
+    spec:
+      serviceAccountName: news-trendz-sa
+      containers:
+      - name: django-app
+        image: harbor.demo.internal/jenkins/newstrends:IMAGE_TAG
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        # Switched to tcpSocket to bypass 404 issues during startup
+        readinessProbe:
+          tcpSocket:
+            port: 8000
+          initialDelaySeconds: 25
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 8000
+          initialDelaySeconds: 45
+          periodSeconds: 20
+      imagePullSecrets:
+      - name: harbor-secret
+
+---
+# 2. THE SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: newstrendz-service
+  namespace: jenkins-dev
+spec:
+  type: ClusterIP
+  selector:
+    app: newstrendz
+  ports:
+    - protocol: TCP
+      port: 80         # Ingress points here
+      targetPort: 8000 # Connects to Django containerPort
+
+---
+# 3. THE INGRESS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: newstrendz-ingress
+  namespace: jenkins-dev
+  # REMOVED rewrite-target: / as it breaks Django routing and Static Files
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: newstrendz.demo.internal
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: newstrendz-service
+            port:
+              number: 80
+
+---
+# 4. THE HPA
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: newstrendz-hpa
+  namespace: jenkins-dev
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: newstrendz-deploy
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70

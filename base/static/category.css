@@ -1,0 +1,131 @@
+
+    body {
+      background-color: #121212;
+      color: white;
+    }
+
+    .navbar {
+      padding: 10px;
+    }
+
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-item a {
+      margin-right: 10px;
+    }
+
+    .grid-container {
+      margin: 5% 5%;
+      display: grid;
+      grid-template-columns: 1fr 2.5fr 1fr;
+      gap: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background-color: #1e1e1e;
+      color: white;
+      border: none;
+    }
+
+    .list-group-item {
+      background: transparent;
+      border: none;
+    }
+
+    .list-group-item a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .list-group-item a:hover {
+      color: #f8c291;
+    }
+
+    .news-card {
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .news-card:hover {
+      transform: scale(1.02);
+    }
+
+    .news-card img {
+      border-radius: 10px;
+    }
+
+    .news-card .card-body {
+      padding: 20px;
+    }
+
+    .news-card a {
+      background-color: #f8c291;
+      border-radius: 50px;
+      font-weight: bold;
+    }
+
+    .news-card a:hover {
+      background-color: #fa8231;
+    }
+
+    .sponsored-ads {
+      background: #1e1e1e;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(248, 194, 145, 0.1);
+    }
+
+    .sponsored-ads h2 {
+      color: #f8c291;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .ad-card {
+      background: #2c2c2c;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+      max-width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .ad-card:hover {
+      transform: scale(1.03);
+    }
+
+    .ad-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .ad-content {
+      padding: 10px 15px;
+    }
+
+    .ad-content h3 {
+      color: #f8c291;
+      font-size: 18px;
+      margin: 10px 0 5px;
+    }
+
+    .ad-content p {
+      font-size: 14px;
+      color: #ccc;
+    }
+ 

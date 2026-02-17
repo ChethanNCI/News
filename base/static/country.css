@@ -1,0 +1,20 @@
+body{
+        
+        background-color: rgb(219, 219, 219);
+    }
+
+    .grid-container {
+      margin: 5% 10%;
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Two equal columns */
+  grid-template-rows: auto auto; /* Auto-sized rows */
+  gap: 10px; /* Gap between grid items */
+}
+
+
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* Single column layout */
+  }
+}
