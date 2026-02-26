@@ -29,7 +29,7 @@ sudo mkdir -p /etc/apt/keyrings/
 curl -fsSL https://download.opensuse.org/repositories/isv:/cri-o:/stable:/v${CRIO_VERSION}/deb/Release.key |
     gpg --dearmor --yes -o /etc/apt/keyrings/cri-o-apt-keyring.gpg 
 
-echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://download.opensuse.org/repositories/isv:/cri-o:/stable:/$CRIO_VERSION/deb/ /" |
+echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://download.opensuse.org/repositories/isv:/cri-o:/stable:/v${CRIO_VERSION}/deb/ /" |
     tee /etc/apt/sources.list.d/cri-o.list
 
 sudo apt-get update -y
